@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberia Students Association - Morocco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Enhanced card animations with 3D effect */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-origin: center;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.02) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .card-hover:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced image hover effects with parallax */
+        .image-hover {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-origin: center;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .image-hover:hover {
+            transform: scale(1.05) translateZ(20px);
+            z-index: 10;
+        }
+
+        .image-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .image-hover:hover::after {
+            opacity: 1;
+        }
+
+        /* Leader card specific animations with 3D tilt */
+        .leader-card {
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .leader-card:hover {
+            transform: translateY(-8px) scale(1.02) rotateX(5deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .leader-card img {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .leader-card:hover img {
+            transform: scale(1.08) translateZ(10px);
+            filter: brightness(1.1);
+        }
+
+        /* Event card animations with depth */
+        .event-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px) scale(1.01) rotateY(3deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .event-card img {
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .event-card:hover img {
+            transform: scale(1.1) rotate(1deg) translateZ(10px);
+        }
+
+        /* Gallery item animations with 3D effect */
+        .gallery-item {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .gallery-item img {
+            transition: transform 0.5s ease, filter 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1) rotateY(5deg);
+            filter: brightness(1.05);
+        }
+
+        /* Support card animations with depth */
+        .support-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px) translateZ(10px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Committee card animations with 3D effect */
+        .committee-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .committee-card:hover {
+            transform: translateY(-5px) rotateX(3deg);
+        }
+
+        .committee-icon {
+            transition: all 0.3s ease;
+        }
+
+        .committee-card:hover .committee-icon {
+            transform: scale(1.1) translateZ(5px);
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        /* Leader social icons with 3D pop */
+        .leader-social {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .leader-social:hover {
+            transform: scale(1.2) translateZ(5px);
+        }
+
+        /* Lightbox styles with 3D effect */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            perspective: 1000px;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .lightbox.active .lightbox-content {
+            animation: lightboxEnter 0.5s ease forwards;
+        }
+
+        @keyframes lightboxEnter {
+            0% { transform: translateY(50px) rotateX(20deg); opacity: 0; }
+            100% { transform: translateY(0) rotateX(0); opacity: 1; }
+        }
+
+        /* Dark mode styles */
+        .dark {
+            --tw-bg-opacity: 1;
+            background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+            color: rgb(229 231 235 / var(--tw-text-opacity));
+        }
+
+        .dark .bg-white {
+            background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        }
+
+        .dark .text-gray-600 {
+            color: rgb(156 163 175 / var(--tw-text-opacity));
+        }
+
+        .dark .bg-blue-800 {
+            background-color: rgb(30 58 138 / var(--tw-bg-opacity));
+        }
+
+        .dark .bg-blue-700 {
+            background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+        }
+
+        .dark .text-white {
+            color: rgb(255 255 255 / var(--tw-text-opacity));
+        }
+
+        .dark .border-gray-300 {
+            border-color: rgb(75 85 99 / var(--tw-border-opacity));
+        }
+
+        .dark .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Flag animation styles */
+        .flag-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .flag {
+            width: 120px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flag:hover {
+            transform: scale(1.1) rotateY(10deg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .flag-liberia {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Liberia.svg');
+        }
+
+        .flag-morocco {
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Morocco.svg');
+        }
+
+        /* Logo with flags animation */
+        .logo-flags-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            perspective: 1000px;
+        }
+
+        .logo-flags-container:hover .flag {
+            transform: rotateY(15deg) translateZ(20px);
+        }
+
+        .logo-flags-container:hover .logo-center {
+            transform: scale(1.1) translateZ(30px);
+        }
+
+        .logo-center {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-style: preserve-3d;
+        }
+
+        /* 3D floating effect for hero section */
+        .hero-content {
+            transform-style: preserve-3d;
+        }
+
+        .hero-content:hover {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(5deg); }
+            100% { transform: translateY(0px) rotateY(0deg); }
+        }
+
+        /* Parallax scrolling effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Glow effect for important elements */
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            }
+        }
+
+        /* Rotating animation for icons */
+        .rotate-icon {
+            transition: transform 0.7s ease;
+        }
+
+        .rotate-icon:hover {
+            transform: rotate(360deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-hover,
+            .image-hover,
+            .leader-card,
+            .event-card,
+            .gallery-item,
+            .support-card,
+            .committee-card,
+            .flag,
+            .logo-center,
+            .hero-content {
+                transition: none !important;
+                transform: none !important;
+                animation: none !important;
+            }
+        }
+        
+        .node image {
+            width: 50px;
+            height: 50px;
+            clip-path: circle(25px);
+        }
+        .node text {
+            font-size: 12px;
+            text-anchor: middle;
+        }
+        .link {
+            fill: none;
+            stroke: blue;
+            stroke-width: 1.5px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-[Poppins]">
+    <!-- Navigation with 3D effect -->
+    <nav class="bg-blue-800 text-white shadow-lg sticky top-0 z-40 transform-style-preserve-3d">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="logo 2.jpg" 
+                         alt="Logo" class="h-10 rounded-full image-hover">
+                    <span class="text-xl font-semibold">Liberia Students Association</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-blue-700 transition-colors rotate-icon">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                    </button>
+                    <button id="languageToggle" class="p-2 rounded-full hover:bg-blue-700 transition-colors" title="Switch to French">
+                        <i class="fas fa-language"></i> EN
+                    </button>
+                    <a href="#home" class="hover:text-blue-200 transition-colors">Home</a>
+                    <a href="#about" class="hover:text-blue-200 transition-colors">About</a>
+                    <a href="#leadership" class="hover:text-blue-200 transition-colors">Leadership</a>
+                    <a href="#events" class="hover:text-blue-200 transition-colors">Events</a>
+                    <a href="#contact" class="hover:text-blue-200 transition-colors">Contact</a>
+                    <a href="#membership" class="hover:text-blue-200 transition-colors">Membership</a>
+                    <a href="#leadership-structure" class="hover:text-blue-200 transition-colors">Leadership Structure</a>
+                    <button onclick="document.getElementById('loginModal').classList.remove('hidden')" 
+                            class="bg-white text-blue-800 px-4 py-1 rounded-full text-sm font-semibold hover:bg-blue-100 transition glow">
+                        Login
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button class="mobile-menu-button">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D floating effect -->
+    <section id="home" class="relative py-32 bg-gradient-to-r from-blue-800 to-blue-600 text-white overflow-hidden parallax" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1800&h=800&q=80');">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-black opacity-30"></div>
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10 hero-content">
+            <div class="max-w-3xl mx-auto">
+                <!-- Logo with flags in the center -->
+                <div class="logo-flags-container">
+                    <div class="flag flag-liberia"></div>
+                    <div class="logo-center">
+                        <img src="logo 2.jpg" 
+                             alt="Logo" class="h-32 mx-auto rounded-full border-4 border-white shadow-lg image-hover">
+                    </div>
+                    <div class="flag flag-morocco"></div>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Liberia Students Association <br>
+                    <span class="text-blue-200">Morocco Chapter</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+                    Empowering Liberian students through academic support, cultural exchange, and community building
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#about" class="bg-white text-blue-800 px-8 py-3 rounded-full font-semibold hover:bg-blue-100 transition duration-300 shadow-lg transform hover:scale-105">
+                        Learn More <i class="fas fa-arrow-down ml-2"></i>
+                    </a>
+                    <a href="#contact" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-800 transition duration-300 shadow-lg transform hover:scale-105">
+                        Join Us <i class="fas fa-user-plus ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with enhanced 3D effects -->
+    <section id="about" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">About Us</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="sport day photo 1.jpg" 
+                         alt="Liberian students studying" class="rounded-lg shadow-xl image-hover">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        The Liberia Students Association in Morocco is a non-profit organization established to promote unity, academic excellence, and cultural exchange among Liberian students studying in Morocco.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Our mission is to provide support, guidance, and a sense of community for Liberian students navigating academic life in Morocco.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We organize various activities including academic workshops, cultural events, and networking opportunities to enhance the student experience.
+                    </p>
+                    
+                    <!-- Country flags with information -->
+                    <div class="flag-container mt-8">
+                        <div class="flag flag-liberia" data-tooltip="Liberia - Our Home Country"></div>
+                        <div class="flag flag-morocco" data-tooltip="Morocco - Our Host Country"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section with enhanced 3D cards -->
+    <section id="leadership" class="py-20 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Our Leadership Team</h2>
+            
+            <!-- Executive Board -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold text-center text-blue-700 dark:text-blue-400 mb-8">Executive Board</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- President -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl leader-card">
+                        <div class="relative overflow-hidden rounded-full w-40 h-40 mx-auto mb-4 border-4 border-blue-100 dark:border-gray-600">
+                            <img src="jubel.png" 
+                                 alt="President" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-center text-gray-800 dark:text-white">Jubel</h4>
+                        <p class="text-blue-600 dark:text-blue-400 text-center font-medium mb-2">President</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm text-center mb-4">Computer Science, University of Rabat</p>
+                        <div class="flex justify-center space-x-3">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Vice President -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl leader-card">
+                        <div class="relative overflow-hidden rounded-full w-40 h-40 mx-auto mb-4 border-4 border-blue-100 dark:border-gray-600">
+                            <img src="p2.jpg" 
+                                 alt="Vice President" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-center text-gray-800 dark:text-white">Jane Smith</h4>
+                        <p class="text-blue-600 dark:text-blue-400 text-center font-medium mb-2">Vice President</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm text-center mb-4">Business Administration, Al Akhawayn University</p>
+                        <div class="flex justify-center space-x-3">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Treasurer -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl leader-card">
+                        <div class="relative overflow-hidden rounded-full w-40 h-40 mx-auto mb-4 border-4 border-blue-100 dark:border-gray-600">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" 
+                                 alt="Treasurer" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-center text-gray-800 dark:text-white">Michael Johnson</h4>
+                        <p class="text-blue-600 dark:text-blue-400 text-center font-medium mb-2">Treasurer</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm text-center mb-4">Economics, Mohammed V University</p>
+                        <div class="flex justify-center space-x-3">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Secretary -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl leader-card">
+                        <div class="relative overflow-hidden rounded-full w-40 h-40 mx-auto mb-4 border-4 border-blue-100 dark:border-gray-600">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" 
+                                 alt="Secretary" class="w-full h-full object-cover">
+                        </div>
+                        <h4 class="text-xl font-bold text-center text-gray-800 dark:text-white">Sarah Williams</h4>
+                        <p class="text-blue-600 dark:text-blue-400 text-center font-medium mb-2">Secretary</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm text-center mb-4">Political Science, University of Casablanca</p>
+                        <div class="flex justify-center space-x-3">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 leader-social">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leadership Structure Section with enhanced 3D visualization -->
+            <section id="leadership-structure" class="py-20 bg-white dark:bg-gray-800">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Leadership Structure</h2>
+                    
+                    <div class="max-w-6xl mx-auto bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg transform transition-all duration-500 hover:scale-[1.01]">
+                        <svg id="orgChart" width="100%" height="600" class="mx-auto"></svg>
+                    </div>
+                    
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                            Our hierarchical leadership structure ensures effective coordination between the executive board, committees, and general membership.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Committees Section with 3D hover effects -->
+            <div>
+                <h3 class="text-2xl font-semibold text-center text-blue-700 dark:text-blue-400 mb-8">Committees</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Academic Committee -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow committee-card">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full mr-4 committee-icon">
+                                <i class="fas fa-book text-blue-600 dark:text-blue-300"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Academic Committee</h4>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Organizes study groups, tutoring sessions, and academic workshops for members.</p>
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>Chair: David Kamara (Engineering)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cultural Committee -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow committee-card">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full mr-4 committee-icon">
+                                <i class="fas fa-music text-blue-600 dark:text-blue-300"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Cultural Committee</h4>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Organizes cultural events, celebrations, and heritage preservation activities.</p>
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>Chair: Aminata Bangura (Arts)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Welfare Committee -->
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow committee-card">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full mr-4 committee-icon">
+                                <i class="fas fa-hands-helping text-blue-600 dark:text-blue-300"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Welfare Committee</h4>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Provides support for members' well-being, including housing and legal assistance.</p>
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-users mr-2"></i>
+                            <span>Chair: Mohammed Keita (Medicine)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Support Section with 3D cards -->
+    <section id="support" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Student Support</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Housing Support -->
+                <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-lg shadow-lg support-card">
+                    <div class="text-blue-600 dark:text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-white">Housing Assistance</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Find accommodation options and roommates through our verified housing network.
+                    </p>
+                    <a href="#housing" class="inline-block mt-4 text-blue-600 dark:text-blue-400 hover:underline">View Resources →</a>
+                </div>
+                
+                <!-- Academic Support -->
+                <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-lg shadow-lg support-card">
+                    <div class="text-blue-600 dark:text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-white">Academic Resources</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Access study materials, tutoring services, and academic guidance.
+                    </p>
+                    <a href="#academics" class="inline-block mt-4 text-blue-600 dark:text-blue-400 hover:underline">Learn More →</a>
+                </div>
+                
+                <!-- Legal Support -->
+                <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-lg shadow-lg support-card">
+                    <div class="text-blue-600 dark:text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 dark:text-white">Legal Assistance</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Get help with visa renewals, residency permits, and other legal matters.
+                    </p>
+                    <button onclick="toggleHelpModal()" class="inline-block mt-4 text-blue-600 dark:text-blue-400 hover:underline">
+                        Get Help →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Get Help with 3D effect -->
+        <div id="helpModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-3/4 md:w-1/2 transform-style-preserve-3d">
+                <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Legal Assistance - Professional Support</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">
+                    Here are some resources and professional support available to assist with your legal needs:
+                </p>
+                <ul class="text-gray-600 dark:text-gray-300 list-disc pl-6 mb-6">
+                    <li>Visa renewal assistance from certified professionals.</li>
+                    <li>Guidance on residency permits and immigration services.</li>
+                    <li>Legal consultations on student-related legal issues.</li>
+                    <li>Help with understanding and applying for work permits.</li>
+                    <li>Free workshops and seminars on legal rights for international students.</li>
+                </ul>
+                <div class="flex justify-end">
+                    <button onclick="toggleHelpModal()" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>           
+        </div>
+    </section>
+
+    <!-- Events Section with enhanced 3D cards -->
+    <section id="events" class="py-20 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Upcoming Events</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Event 1 -->
+                <div class="event-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="overflow-hidden h-48">
+                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" 
+                             alt="Cultural event" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 dark:text-white">Cultural Exchange Day</h3>
+                        <p class="text-gray-500 dark:text-gray-400 mb-2"><i class="far fa-calendar-alt mr-2"></i>June 15, 2023</p>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Rabat, Morocco</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Join us for a day of cultural performances, food, and networking with students from across Africa.</p>
+                        <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-800 dark:hover:text-blue-300 transition-colors" onclick="showModal('event1')">Learn More →</a>
+                    </div>
+                </div>
+        
+                <!-- Event 2 -->
+                <div class="event-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="overflow-hidden h-48">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" 
+                             alt="Academic workshop" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 dark:text-white">Academic Workshop</h3>
+                        <p class="text-gray-500 dark:text-gray-400 mb-2"><i class="far fa-calendar-alt mr-2"></i>July 5, 2023</p>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Online</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Learn effective study techniques and time management strategies from senior students.</p>
+                        <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-800 dark:hover:text-blue-300 transition-colors" onclick="showModal('event2')">Learn More →</a>
+                    </div>
+                </div>
+        
+                <!-- Event 3 -->
+                <div class="event-card bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="overflow-hidden h-48">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=200&q=80" 
+                             alt="Student orientation" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 dark:text-white">New Students Orientation</h3>
+                        <p class="text-gray-500 dark:text-gray-400 mb-2"><i class="far fa-calendar-alt mr-2"></i>September 1, 2023</p>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4"><i class="fas fa-map-marker-alt mr-2"></i>Casablanca, Morocco</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Welcome event for new Liberian students arriving in Morocco for their studies.</p>
+                        <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-800 dark:hover:text-blue-300 transition-colors" onclick="showModal('event3')">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Section with 3D animation -->
+        <div id="modal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full transform-style-preserve-3d">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Event Details</h3>
+                <div id="modal-content" class="text-gray-600 dark:text-gray-300">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                <button onclick="closeModal()" class="mt-4 py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">Close</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section with enhanced 3D effects -->
+    <section id="gallery" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Photo Gallery</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=500&q=80" 
+                         alt="Cultural event" class="w-full h-48 object-cover hover:scale-105 transition-transform">
+                    <div class="p-4 bg-white dark:bg-gray-700">
+                        <h3 class="font-medium text-gray-800 dark:text-white">Cultural Day 2023</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">October 15, 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=500&q=80" 
+                         alt="Workshop" class="w-full h-48 object-cover hover:scale-105 transition-transform">
+                    <div class="p-4 bg-white dark:bg-gray-700">
+                        <h3 class="font-medium text-gray-800 dark:text-white">Academic Workshop</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">September 5, 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=500&q=80" 
+                         alt="Orientation" class="w-full h-48 object-cover hover:scale-105 transition-transform">
+                    <div class="p-4 bg-white dark:bg-gray-700">
+                        <h3 class="font-medium text-gray-800 dark:text-white">New Students Orientation</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">August 20, 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                    <img src="sport day photo 1.jpg" 
+                         alt="Sports day" class="w-full h-48 object-cover hover:scale-105 transition-transform">
+                    <div class="p-4 bg-white dark:bg-gray-700">
+                        <h3 class="font-medium text-gray-800 dark:text-white">Sports Day</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">July 8, 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Housing Assistance Section with 3D effects -->
+    <section id="housing" class="py-20 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl font-bold text-center text-gray-800 dark:text-white mb-8">Housing Assistance</h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Housing Search -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg lg:col-span-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white group">
+                        <span class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300">Find Accommodation</span>
+                    </h2>
+                    
+                    <form id="housingForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="group">
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Location</label>
+                                <select id="location" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500 cursor-pointer">
+                                    <option value="">Select City</option>
+                                    <option value="rabat">Rabat</option>
+                                    <option value="casablanca">Casablanca</option>
+                                    <option value="fes">Fes</option>
+                                    <option value="marrakech">Marrakech</option>
+                                    <option value="tangier">Tangier</option>
+                                    <option value="oujda">Oujda</option>
+                                    <option value="settat">Settat</option>
+                                    <option value="beni-mellal">Beni-Mellal</option>
+                                    <option value="kenitra">Kenitra</option>
+                                </select>
+                            </div>
+                            
+                            <div class="group">
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Budget (MAD/month)</label>
+                                <div class="flex items-center space-x-4">
+                                    <input type="range" id="budget" min="850" max="5000" step="50" value="2500" 
+                                           class="w-full cursor-pointer transition-all duration-300 hover:accent-blue-500">
+                                    <span class="text-gray-600 dark:text-gray-300 min-w-[60px] font-medium" id="budgetValue">2,500</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="group">
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Room Type</label>
+                                <select id="roomType" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500 cursor-pointer">
+                                    <option value="any">Any</option>
+                                    <option value="single">Single Room</option>
+                                    <option value="shared">Shared Room</option>
+                                    <option value="studio">Studio</option>
+                                    <option value="apartment">Apartment</option>
+                                </select>
+                            </div>
+                            
+                            <div class="group">
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Availability</label>
+                                <input type="date" id="availability"
+                                       class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 cursor-pointer">
+                            </div>
+                        </div>
+                        
+                        <button type="button" id="searchBtn"
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-all duration-300 font-semibold hover:scale-[1.02] transform active:scale-[0.98] shadow-md hover:shadow-lg">
+                            Search Housing
+                        </button>
+                    </form>
+
+                              <!-- Search Results Section -->
+                <div id="searchResults" class="mt-8 hidden">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Available Properties</h3>
+                    <div id="propertyList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Properties will appear here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Payment Modal -->
+                <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl w-full max-w-md relative">
+                        <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-xl">
+                            &times;
+                        </button>
+                        
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Secure Payment</h3>
+                            
+                            <div id="propertySummary" class="mb-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <!-- Property details will be inserted here -->
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">Payment Method</label>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button class="payment-method-btn border rounded p-2 flex justify-center" data-method="visa">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg" class="h-6" alt="Visa">
+                                    </button>
+                                    <button class="payment-method-btn border rounded p-2 flex justify-center" data-method="mastercard">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mastercard/mastercard-original.svg" class="h-6" alt="Mastercard">
+                                    </button>
+                                    <button class="payment-method-btn border rounded p-2 flex justify-center" data-method="maestro">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Maestro_logo.svg/1200px-Maestro_logo.svg.png" class="h-6" alt="Maestro">
+                                    </button>
+                                    <button class="payment-method-btn border rounded p-2 flex justify-center" data-method="other">
+                                        Other
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="cardForm">
+                                <div class="group mb-4">
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Card Number</label>
+                                    <div class="relative">
+                                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19"
+                                               class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500 pl-10">
+                                        <div class="absolute left-3 top-2.5 text-gray-400">
+                                            <i class="far fa-credit-card"></i>
+                                        </div>
+                                        <div id="cardTypeIcon" class="absolute right-3 top-2.5 text-gray-400 hidden">
+                                            <!-- Card type icon will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="group">
+                                        <label class="block text-gray-700 dark:text-gray-300 mb-2">Expiry Date</label>
+                                        <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5"
+                                               class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500">
+                                    </div>
+                                    <div class="group">
+                                        <label class="block text-gray-700 dark:text-gray-300 mb-2">CVV</label>
+                                        <div class="relative">
+                                            <input type="password" id="cvv" placeholder="123" maxlength="4"
+                                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500">
+                                            <div class="absolute right-3 top-2.5 text-gray-400 cursor-pointer" id="toggleCVV">
+                                                <i class="fas fa-eye" title="Show CVV"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="group mb-4">
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Cardholder Name</label>
+                                    <input type="text" id="cardName" placeholder="As on card"
+                                           class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                
+                                <div class="flex items-center mb-6">
+                                    <input id="saveCard" type="checkbox"
+                                           class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 cursor-pointer">
+                                    <label for="saveCard" class="ml-2 block text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                                        Save card details for future payments
+                                    </label>
+                                </div>
+                                
+                                <button id="payNowBtn"
+                                        class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-all duration-300 font-semibold hover:scale-[1.02] transform active:scale-[0.98] shadow-md hover:shadow-lg">
+                                    <i class="fas fa-lock mr-2"></i> Pay Securely
+                                </button>
+
+                                <!-- Sign Out Button -->
+                                <button id="signOutCardBtn" class="w-full mt-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white px-4 py-2 rounded-lg transition-all duration-300 font-medium">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                                </button>
+                            </div>
+                            
+                            <div id="paymentProcessing" class="hidden text-center py-4">
+                                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+                                <p class="text-gray-600 dark:text-gray-300">Processing your payment...</p>
+                            </div>
+                            
+                            <div id="paymentSuccess" class="hidden text-center py-4">
+                                <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full h-12 w-12 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-check text-2xl"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800 dark:text-white mb-1">Payment Successful!</h4>
+                                <p class="text-gray-600 dark:text-gray-300 mb-3">Your booking is confirmed</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">A confirmation has been sent to your email</p>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <p class="text-xs text-gray-500 dark:text-gray-400">
+                                    <i class="fas fa-lock mr-1"></i> Payments are secured with 256-bit SSL encryption
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Housing Tips -->
+            <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <h2 class="text-2xl font-semibold mb-6 text-blue-800 dark:text-blue-300 group">
+                    <span class="group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-all duration-300">Housing Tips</span>
+                </h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start group">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 group-hover:scale-110 transition-all duration-300"></i>
+                        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300">Always visit the property in person before paying any deposit</span>
+                    </li>
+                    <li class="flex items-start group">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 group-hover:scale-110 transition-all duration-300"></i>
+                        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300">Ask for a written contract in French or Arabic</span>
+                    </li>
+                    <li class="flex items-start group">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 group-hover:scale-110 transition-all duration-300"></i>
+                        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300">Verify utility costs are included or separate</span>
+                    </li>
+                    <li class="flex items-start group">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 group-hover:scale-110 transition-all duration-300"></i>
+                        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300">Check transportation access to your university</span>
+                    </li>
+                    <li class="flex items-start group">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3 group-hover:scale-110 transition-all duration-300"></i>
+                        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300">Ask about safety and neighborhood security</span>
+                    </li>
+                </ul>
+                
+                <div class="mt-8 group">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-800 dark:text-blue-300 transition-all duration-300 group-hover:text-blue-700 dark:group-hover:text-blue-400">Average Prices</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between hover:bg-blue-100 dark:hover:bg-gray-600 px-2 py-1 rounded transition-all duration-300">
+                            <span class="text-gray-700 dark:text-gray-300">Single Room</span>
+                            <span class="font-medium">850 - 1,200 MAD</span>
+                        </div>
+                        <div class="flex justify-between hover:bg-blue-100 dark:hover:bg-gray-600 px-2 py-1 rounded transition-all duration-300">
+                            <span class="text-gray-700 dark:text-gray-300">Shared Room</span>
+                            <span class="font-medium">1,200 - 2,000 MAD</span>
+                        </div>
+                        <div class="flex justify-between hover:bg-blue-100 dark:hover:bg-gray-600 px-2 py-1 rounded transition-all duration-300">
+                            <span class="text-gray-700 dark:text-gray-300">Studio</span>
+                            <span class="font-medium">2,000 - 3,000 MAD</span>
+                        </div>
+                        <div class="flex justify-between hover:bg-blue-100 dark:hover:bg-gray-600 px-2 py-1 rounded transition-all duration-300">
+                            <span class="text-gray-700 dark:text-gray-300">Apartment</span>
+                            <span class="font-medium">3,500 - 5,000 MAD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Budget range display
+    const budgetSlider = document.getElementById('budget');
+    const budgetValue = document.getElementById('budgetValue');
+    
+    budgetSlider.addEventListener('input', function() {
+        budgetValue.textContent = Number(this.value).toLocaleString();
+    });
+
+    // Property database with all cities and room types
+    const propertyDatabase = {
+        rabat: [
+            {
+                id: 1,
+                type: 'single',
+                price: 900,
+                title: 'Cozy Single Room Near Campus',
+                description: 'Utilities included, 10min walk to university',
+                image: 'single room.jpeg',
+                amenities: ['WiFi', 'Laundry', 'Study Desk']
+            },
+            {
+                id: 2,
+                type: 'shared',
+                price: 1500,
+                title: 'Shared Apartment Downtown',
+                description: '2 bedrooms, near tram station, furnished',
+                image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['Kitchen', 'Balcony', 'Security']
+            },
+            {
+                id: 3,
+                type: 'studio',
+                price: 2200,
+                title: 'Modern Studio Apartment',
+                description: 'Private bathroom and kitchenette, secure building',
+                image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['AC', 'Private Entrance', 'Elevator']
+            },
+            {
+                id: 4,
+                type: 'apartment',
+                price: 3800,
+                title: 'Luxury 2-Bed Apartment',
+                description: 'City views, modern furnishings, parking included',
+                image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['2 Bedrooms', 'Parking', 'AC']
+            }
+        ],
+        casablanca: [
+            {
+                id: 5,
+                type: 'single',
+                price: 950,
+                title: 'Single Room in Quiet Area',
+                description: 'Near Hassan II University, shared kitchen',
+                image: 'https://images.unsplash.com/photo-1529408632839-a54952c491e5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['WiFi', 'Laundry', 'Study Area']
+            },
+            {
+                id: 6,
+                type: 'shared',
+                price: 1400,
+                title: 'Shared Student House',
+                description: '3 students, near beach, common areas',
+                image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['Garden', 'Kitchen', 'Living Room']
+            }
+        ],
+        fes: [
+            {
+                id: 7,
+                type: 'single',
+                price: 850,
+                title: 'Traditional Single Room',
+                description: 'In the Medina, authentic Moroccan experience',
+                image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['Traditional Decor', 'Courtyard', 'WiFi']
+            }
+        ],
+        oujda: [
+            {
+                id: 8,
+                type: 'single',
+                price: 900,
+                title: 'Student Room Near University',
+                description: 'Close to Mohammed I University, quiet neighborhood',
+                image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['WiFi', 'Study Desk', 'Shared Kitchen']
+            }
+        ],
+        settat: [
+            {
+                id: 9,
+                type: 'shared',
+                price: 1200,
+                title: 'Shared Apartment for Students',
+                description: 'Near Hassan I University, furnished rooms',
+                image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['Kitchen', 'Living Room', 'WiFi']
+            }
+        ],
+        "beni-mellal": [
+            {
+                id: 10,
+                type: 'studio',
+                price: 2000,
+                title: 'New Studio Apartment',
+                description: 'Modern building with security, near city center',
+                image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['Private Bathroom', 'Kitchenette', 'AC']
+            }
+        ],
+        kenitra: [
+            {
+                id: 11,
+                type: 'apartment',
+                price: 3500,
+                title: 'Spacious 2-Bedroom Apartment',
+                description: 'Near Ibn Tofail University, balcony with view',
+                image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                amenities: ['2 Bedrooms', 'Living Room', 'Parking']
+            }
+        ]
+    };
+
+    // Amenity icons mapping
+    const amenityIcons = {
+        'WiFi': 'wifi',
+        'Laundry': 'tshirt',
+        'Study Desk': 'desktop',
+        'Kitchen': 'utensils',
+        'Balcony': 'building',
+        'Security': 'shield-alt',
+        'AC': 'snowflake',
+        'Private Entrance': 'door-open',
+        'Elevator': 'elevator',
+        'Parking': 'parking',
+        'Garden': 'tree',
+        'Living Room': 'couch',
+        'Traditional Decor': 'palette',
+        'Courtyard': 'tree',
+        'Study Area': 'book',
+        '2 Bedrooms': 'bed',
+        'Shared Kitchen': 'kitchen-set'
+    };
+
+    // Search functionality
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        const location = document.getElementById('location').value;
+        const budget = parseInt(document.getElementById('budget').value);
+        const roomType = document.getElementById('roomType').value;
+        
+        if (!location) {
+            alert('Please select a location');
+            return;
+        }
+        
+        const resultsContainer = document.getElementById('searchResults');
+        const propertyList = document.getElementById('propertyList');
+        propertyList.innerHTML = '';
+        
+        // Filter properties
+        let properties = propertyDatabase[location] || [];
+        properties = properties.filter(prop => {
+            const matchesBudget = prop.price <= budget;
+            const matchesType = roomType === 'any' || prop.type === roomType;
+            return matchesBudget && matchesType;
+        });
+        
+        if (properties.length === 0) {
+            propertyList.innerHTML = `
+                <div class="col-span-2 text-center py-8">
+                    <i class="fas fa-home text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600 dark:text-gray-300">No properties found matching your criteria</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Try adjusting your filters</p>
+                </div>
+            `;
+        } else {
+            properties.forEach(property => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-gray-600 rounded-lg overflow-hidden shadow hover:shadow-lg transition-all duration-300';
+                
+                card.innerHTML = `
+                    <div class="relative h-48">
+                        <img src="${property.image}" 
+                             alt="${property.title}" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'">
+                        <div class="absolute bottom-0 bg-gradient-to-t from-black/80 to-transparent w-full p-3">
+                            <span class="text-white font-bold">${property.price.toLocaleString()} MAD/month</span>
+                            <span class="block text-sm text-white/80">${property.type.replace('-', ' ')}</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-semibold text-gray-800 dark:text-white mb-1">${property.title}</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">${property.description}</p>
+                        
+                        <div class="flex flex-wrap gap-4 mb-4">
+                            ${property.amenities.map(amenity => {
+                                const icon = amenityIcons[amenity] || 'check-circle';
+                                return `
+                                <div class="flex flex-col items-center w-16">
+                                    <div class="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mb-1">
+                                        <i class="fas fa-${icon} text-blue-600 dark:text-blue-400"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-700 dark:text-gray-300 text-center">${amenity}</span>
+                                </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        
+                        <button class="book-btn w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"
+                                data-id="${property.id}"
+                                data-title="${property.title}"
+                                data-price="${property.price}"
+                                data-image="${property.image}">
+                            Book Now
+                        </button>
+                    </div>
+                `;
+                
+                propertyList.appendChild(card);
+            });
+            
+            // Add event listeners to all book buttons
+            document.querySelectorAll('.book-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const propertyId = this.getAttribute('data-id');
+                    const propertyTitle = this.getAttribute('data-title');
+                    const propertyPrice = this.getAttribute('data-price');
+                    const propertyImage = this.getAttribute('data-image');
+                    
+                    document.getElementById('propertySummary').innerHTML = `
+                        <div class="flex items-start">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mr-4">
+                                <img src="${propertyImage}" alt="${propertyTitle}" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 dark:text-white">${propertyTitle}</h4>
+                                <p class="text-gray-600 dark:text-gray-300">${propertyPrice} MAD/month</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Deposit required: ${Math.round(propertyPrice * 0.3).toLocaleString()} MAD</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('paymentModal').classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+        }
+        
+        resultsContainer.classList.remove('hidden');
+    });
+
+    // Payment Method Selection
+    document.querySelectorAll('.payment-method-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.payment-method-btn').forEach(b => {
+                b.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/30');
+            });
+            this.classList.add('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/30');
+            
+            // Update card type icon if known
+            const method = this.dataset.method;
+            const cardTypeIcon = document.getElementById('cardTypeIcon');
+            if (method !== 'other') {
+                cardTypeIcon.innerHTML = this.innerHTML;
+                cardTypeIcon.classList.remove('hidden');
+            } else {
+                cardTypeIcon.classList.add('hidden');
+            }
+        });
+    });
+    
+    // Format card number input (add spaces every 4 digits)
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+        let value = this.value.replace(/\s+/g, '');
+        if (value.length > 0) {
+            value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+        }
+        this.value = value;
+        
+        // Detect card type
+        const cardTypeIcon = document.getElementById('cardTypeIcon');
+        const firstDigit = value.charAt(0);
+        
+        if (/^4/.test(value)) {
+            cardTypeIcon.innerHTML = '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg" class="h-6" alt="Visa">';
+            cardTypeIcon.classList.remove('hidden');
+        } else if (/^5[1-5]/.test(value)) {
+            cardTypeIcon.innerHTML = '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mastercard/mastercard-original.svg" class="h-6" alt="Mastercard">';
+            cardTypeIcon.classList.remove('hidden');
+        } else if (/^(5018|5020|5038|5893|6304|6759|6761|6762|6763)/.test(value)) {
+            cardTypeIcon.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Maestro_logo.svg/1200px-Maestro_logo.svg.png" class="h-6" alt="Maestro">';
+            cardTypeIcon.classList.remove('hidden');
+        } else if (value.length > 0) {
+            cardTypeIcon.innerHTML = '<i class="far fa-credit-card"></i>';
+            cardTypeIcon.classList.remove('hidden');
+        } else {
+            cardTypeIcon.classList.add('hidden');
+        }
+    });
+    
+    // Format expiry date (MM/YY)
+    document.getElementById('expiryDate').addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        this.value = value;
+    });
+    
+    // Toggle CVV visibility
+    document.getElementById('toggleCVV').addEventListener('click', function() {
+        const cvvInput = document.getElementById('cvv');
+        const icon = this.querySelector('i');
+        if (cvvInput.type === 'password') {
+            cvvInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+            icon.title = 'Hide CVV';
+        } else {
+            cvvInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+            icon.title = 'Show CVV';
+        }
+    });
+    
+    // Handle payment submission
+    document.getElementById('payNowBtn').addEventListener('click', function() {
+        const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+        const cardName = document.getElementById('cardName').value;
+        
+        // Simple validation
+        if (!cardNumber || cardNumber.length < 16) {
+            alert('Please enter a valid card number');
+            return;
+        }
+        if (!expiryDate || !expiryDate.includes('/')) {
+            alert('Please enter a valid expiry date (MM/YY)');
+            return;
+        }
+        if (!cvv || cvv.length < 3) {
+            alert('Please enter a valid CVV');
+            return;
+        }
+        if (!cardName) {
+            alert('Please enter the cardholder name');
+            return;
+        }
+        
+        // Show processing indicator
+        document.getElementById('cardForm').classList.add('hidden');
+        document.getElementById('paymentProcessing').classList.remove('hidden');
+        
+        // Simulate payment processing (in real app, this would call your payment API)
+        setTimeout(() => {
+            document.getElementById('paymentProcessing').classList.add('hidden');
+            document.getElementById('paymentSuccess').classList.remove('hidden');
+            this.disabled = true;
+            
+            // In a real app, you would redirect or show a success message
+            setTimeout(() => {
+                document.getElementById('paymentModal').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                alert('Payment successful! Your booking is confirmed.');
+                // Reset form
+                document.getElementById('cardForm').classList.remove('hidden');
+                document.getElementById('paymentSuccess').classList.add('hidden');
+                this.disabled = false;
+            }, 2000);
+        }, 3000);
+    });
+    
+    // Close modal
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('paymentModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+
+    // Sign Out Card functionality
+    document.getElementById('signOutCardBtn').addEventListener('click', function() {
+        // Clear all card/payment fields
+        document.getElementById('cardNumber').value = '';
+        document.getElementById('expiryDate').value = '';
+        document.getElementById('cvv').value = '';
+        document.getElementById('cardName').value = '';
+        document.getElementById('saveCard').checked = false;
+        
+        // Reset any selected payment method
+        document.querySelectorAll('.payment-method-btn').forEach(b => {
+            b.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/30');
+        });
+        
+        // Hide card type icon
+        document.getElementById('cardTypeIcon').classList.add('hidden');
+        
+        // Show confirmation message
+        alert('You have been signed out. All payment details have been cleared.');
+        
+        // Close the modal
+        document.getElementById('paymentModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+});
+</script>
+<!-- Academic Resources Section with 3D effects -->
+<section id="academics" class="py-20 bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-6">
+        <h1 class="text-4xl font-bold text-center text-gray-800 dark:text-white mb-8">Academic Resources</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Study Resources -->
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white group">
+                        <span class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300">Study Resources</span>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Resource 1 -->
+                        <div class="bg-white dark:bg-gray-600 p-4 rounded-lg shadow transition-all duration-300 hover:shadow-md hover:-translate-y-1 border border-transparent hover:border-blue-200 dark:hover:border-blue-800">
+                            <div class="flex items-center mb-3 group">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded-full mr-3 transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800">
+                                    <i class="fas fa-book text-blue-600 dark:text-blue-300 transition-all duration-300 group-hover:scale-110"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Course Materials</h3>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+                                Access shared notes, past exams, and study guides from senior students.
+                            </p>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 text-sm hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300 inline-flex items-center">
+                                Browse Materials <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Resource 2 -->
+                        <div class="bg-white dark:bg-gray-600 p-4 rounded-lg shadow transition-all duration-300 hover:shadow-md hover:-translate-y-1 border border-transparent hover:border-blue-200 dark:hover:border-blue-800">
+                            <div class="flex items-center mb-3 group">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded-full mr-3 transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800">
+                                    <i class="fas fa-laptop-code text-blue-600 dark:text-blue-300 transition-all duration-300 group-hover:scale-110"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Software Tools</h3>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+                                Get free student licenses for academic software and tools.
+                            </p>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 text-sm hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300 inline-flex items-center">
+                                View Tools <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Resource 3 -->
+                        <div class="bg-white dark:bg-gray-600 p-4 rounded-lg shadow transition-all duration-300 hover:shadow-md hover:-translate-y-1 border border-transparent hover:border-blue-200 dark:hover:border-blue-800">
+                            <div class="flex items-center mb-3 group">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded-full mr-3 transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800">
+                                    <i class="fas fa-graduation-cap text-blue-600 dark:text-blue-300 transition-all duration-300 group-hover:scale-110"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Scholarships</h3>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+                                Find scholarship opportunities for Liberian students in Morocco.
+                            </p>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 text-sm hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300 inline-flex items-center">
+                                View Opportunities <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Resource 4 -->
+                        <div class="bg-white dark:bg-gray-600 p-4 rounded-lg shadow transition-all duration-300 hover:shadow-md hover:-translate-y-1 border border-transparent hover:border-blue-200 dark:hover:border-blue-800">
+                            <div class="flex items-center mb-3 group">
+                                <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded-full mr-3 transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800">
+                                    <i class="fas fa-language text-blue-600 dark:text-blue-300 transition-all duration-300 group-hover:scale-110"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Language Support</h3>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">
+                                Arabic and French language learning resources for academic success.
+                            </p>
+                            <a href="#" class="text-blue-600 dark:text-blue-400 text-sm hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300 inline-flex items-center">
+                                Access Resources <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tutoring Program -->
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white group">
+                        <span class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300">Peer Tutoring Program</span>
+                    </h2>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-3 text-gray-700 dark:text-gray-300 group">
+                            <span class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300">Available Tutors</span>
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white dark:bg-gray-600 rounded-lg overflow-hidden">
+                                <thead class="bg-gray-100 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300">Name</th>
+                                        <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300">Subject</th>
+                                        <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300">University</th>
+                                        <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300">Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-500">
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-500 transition-all duration-300">
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">Mohamed K.</td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">Mathematics</td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">University of Rabat</td>
+                                        <td class="px-4 py-3">
+                                            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300">Request</a>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-500 transition-all duration-300">
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">Fatima Z.</td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">Physics</td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">Mohammed V University</td>
+                                        <td class="px-4 py-3">
+                                            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300">Request</a>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-500 transition-all duration-300">
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">Samuel B.</td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">French Language</td>
+                                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300">University of Casablanca</td>
+                                        <td class="px-4 py-3">
+                                            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-300">Request</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium mb-3 text-gray-700 dark:text-gray-300 group">
+                            <span class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300">Request a Tutor</span>
+                        </h3>
+                        <form class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="group">
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Subject</label>
+                                    <select class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500 cursor-pointer">
+                                        <option>Mathematics</option>
+                                        <option>Physics</option>
+                                        <option>Chemistry</option>
+                                        <option>Biology</option>
+                                        <option>Computer Science</option>
+                                    </select>
+                                </div>
+                                <div class="group">
+                                    <label class="block text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Preferred Language</label>
+                                    <select class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500 cursor-pointer">
+                                        <option>English</option>
+                                        <option>French</option>
+                                        <option>Arabic</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <label class="block text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Additional Details</label>
+                                <textarea class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-300 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-500" rows="3"></textarea>
+                            </div>
+                            <button type="submit" 
+                                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all duration-300 hover:scale-[1.02] transform active:scale-[0.98] shadow-md hover:shadow-lg">
+                                Submit Request
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div>
+                <!-- Academic Calendar -->
+                <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white group">
+                        <span class="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300">Academic Calendar</span>
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="flex items-start group">
+                            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-lg mr-3 text-center transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 group-hover:scale-105">
+                                <div class="font-bold">15</div>
+                                <div class="text-xs">OCT</div>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Midterm Exams Begin</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">All universities</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start group">
+                            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-lg mr-3 text-center transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 group-hover:scale-105">
+                                <div class="font-bold">30</div>
+                                <div class="text-xs">NOV</div>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Registration Deadline</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">For next semester</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start group">
+                            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-lg mr-3 text-center transition-all duration-300 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 group-hover:scale-105">
+                                <div class="font-bold">15</div>
+                                <div class="text-xs">DEC</div>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-800 dark:text-white transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Final Exams Begin</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-200">Check your schedule</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <h2 class="text-xl font-semibold mb-4 text-blue-800 dark:text-blue-300 group">
+                        <span class="group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-all duration-300">Quick Links</span>
+                    </h2>
+                    <ul class="space-y-3">
+                        <li class="group">
+                            <a href="#" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">
+                                <i class="fas fa-external-link-alt mr-2 transition-all duration-300 group-hover:translate-x-1"></i>
+                                <span>Moroccan University Portal</span>
+                            </a>
+                        </li>
+                        <li class="group">
+                            <a href="#" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">
+                                <i class="fas fa-external-link-alt mr-2 transition-all duration-300 group-hover:translate-x-1"></i>
+                                <span>Library Resources</span>
+                            </a>
+                        </li>
+                        <li class="group">
+                            <a href="#" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">
+                                <i class="fas fa-external-link-alt mr-2 transition-all duration-300 group-hover:translate-x-1"></i>
+                                <span>Research Databases</span>
+                            </a>
+                        </li>
+                        <li class="group">
+                            <a href="#" class="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300">
+                                <i class="fas fa-external-link-alt mr-2 transition-all duration-300 group-hover:translate-x-1"></i>
+                                <span>Student Visa Guidelines</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Membership Section with 3D form -->
+    <section id="membership" class="py-20 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transform transition duration-300 hover:scale-105">
+                <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">Membership Registration</h2>
+
+                <form method="POST" class="space-y-6" id="membershipForm">
+                    <!-- Full Name and Email -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="full_name" class="block text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
+                            <input type="text" id="full_name" name="full_name" 
+                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                          bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                   required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" name="email" 
+                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                          bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number and University -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="phone_number" class="block text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
+                            <input type="tel" id="phone_number" name="phone_number" 
+                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                          bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                   required>
+                        </div>
+                        <div>
+                            <label for="university" class="block text-gray-700 dark:text-gray-300 mb-2">University</label>
+                            <select id="university" name="university" 
+                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                           bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                    required>
+                                <option value="">Select University</option>
+                                <option>University of Rabat</option>
+                                <option>Mohammed V University</option>
+                                <option>Al Akhawayn University</option>
+                                <option>University of Casablanca</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Field of Study and Year of Study -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="field_of_study" class="block text-gray-700 dark:text-gray-300 mb-2">Field of Study</label>
+                            <input type="text" id="field_of_study" name="field_of_study" 
+                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                          bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                   required>
+                        </div>
+                        <div>
+                            <label for="year_of_study" class="block text-gray-700 dark:text-gray-300 mb-2">Year of Study</label>
+                            <select id="year_of_study" name="year_of_study" 
+                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                           bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                    required>
+                                <option value="">Select Year</option>
+                                <option>1st Year</option>
+                                <option>2nd Year</option>
+                                <option>3rd Year</option>
+                                <option>4th Year</option>
+                                <option>Graduate Student</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Optional Question -->
+                    <div>
+                        <label for="reason_to_join" class="block text-gray-700 dark:text-gray-300 mb-2">Why do you want to join? (Optional)</label>
+                        <textarea id="reason_to_join" name="reason_to_join" 
+                                  class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                                         bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500 transition-all duration-300 hover:border-blue-600"
+                                  rows="3"></textarea>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="flex items-center">
+                        <input type="checkbox" id="terms" name="terms" 
+                               class="w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                                      focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                      focus:ring-2 dark:bg-gray-700 dark:border-gray-600" required>
+                        <label for="terms" class="text-gray-700 dark:text-gray-300 text-sm">
+                            I agree to the <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Terms and Conditions</a> and 
+                            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg 
+                                   font-semibold transition-colors duration-300 transform hover:scale-105">
+                        Submit Application
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with 3D form -->
+    <section id="contact" class="py-20 bg-blue-800 text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Contact Us</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold mb-4">Get In Touch</h3>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="text-blue-200 text-xl mt-1">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Address</h4>
+                            <p class="text-blue-200">123 University Avenue, Rabat, Morocco</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="text-blue-200 text-xl mt-1">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Email</h4>
+                            <p class="text-blue-200">contact@liberiastudents-morocco.org</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="text-blue-200 text-xl mt-1">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Phone</h4>
+                            <p class="text-blue-200">+212 600 123 456</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="text-blue-200 text-xl mt-1">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Office Hours</h4>
+                            <p class="text-blue-200">Monday-Friday: 9am - 5pm</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <h4 class="font-medium mb-3">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-blue-200 text-2xl transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form with 3D effect -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg transform-style-preserve-3d">
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6">Send Us a Message</h3>
+                    
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-gray-700 dark:text-gray-300 mb-1">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 dark:text-gray-300 mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:border-blue-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Application Section with 3D form -->
+    <section id="apply" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">Leadership Application</h1>
+                
+                <form id="applicationForm" class="space-y-6">
+                    <div class="group">
+                        <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 focus:hover:border-blue-500">
+                    </div>
+
+                    <div class="group">
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 focus:hover:border-blue-500">
+                    </div>
+
+                    <div class="group">
+                        <label for="position" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Position Applying For</label>
+                        <select id="position" name="position" required
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 focus:hover:border-blue-500 cursor-pointer">
+                            <option value="">Select a position</option>
+                            <option value="president">President</option>
+                            <option value="vice_president">Vice President</option>
+                            <option value="secretary">Secretary</option>
+                            <option value="treasurer">Treasurer</option>
+                            <option value="committee_member">Committee Member</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <label for="motivation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Motivation Letter</label>
+                        <textarea id="motivation" name="motivation" rows="5" required
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 focus:hover:border-blue-500"
+                            placeholder="Describe why you are interested in this position and what skills and experience you bring."></textarea>
+                    </div>
+
+                    <div class="group">
+                        <label for="additionalInfo" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Additional Information</label>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="3"
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 focus:hover:border-blue-500"
+                            placeholder="Any additional comments or relevant experience."></textarea>
+                    </div>
+
+                    <div class="flex items-center group">
+                        <input id="terms" name="terms" type="checkbox" required
+                            class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 bg-white dark:bg-gray-800 transition-all duration-300 hover:border-blue-400 cursor-pointer">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            I agree to the <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">terms and conditions</a>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:scale-[1.02] transform active:scale-[0.98]">
+                            Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section with 3D accordion -->
+    <section id="faq" class="py-20 bg-gray-100 dark:bg-gray-900">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Frequently Asked Questions</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transform-style-preserve-3d">
+                    <button class="faq-question w-full text-left p-4 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-medium text-gray-800 dark:text-white">Who can become a member?</h3>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </div>
+                    </button>
+                    <div class="faq-answer p-4 bg-white dark:bg-gray-800 hidden">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Any Liberian student currently enrolled in a Moroccan university or higher education institution can become a member. 
+                            Alumni and prospective students may also join as associate members.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transform-style-preserve-3d">
+                    <button class="faq-question w-full text-left p-4 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-medium text-gray-800 dark:text-white">Is there a membership fee?</h3>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </div>
+                    </button>
+                    <div class="faq-answer p-4 bg-white dark:bg-gray-800 hidden">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Yes, there is an annual membership fee of 200 MAD for regular members and 300 MAD for associate members. 
+                            This helps cover operational costs and event organization.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transform-style-preserve-3d">
+                    <button class="faq-question w-full text-left p-4 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-medium text-gray-800 dark:text-white">How long does approval take?</h3>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </div>
+                    </button>
+                    <div class="faq-answer p-4 bg-white dark:bg-gray-800 hidden">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Applications are typically processed within 3-5 business days. You'll receive an email confirmation 
+                            once your membership is approved along with payment instructions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with 3D effect -->
+    <footer class="bg-gray-900 text-white py-12 transform-style-preserve-3d">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">About Us</h3>
+                    <p class="text-gray-400">The Liberia Students Association in Morocco is dedicated to supporting Liberian students through academic, cultural, and social programs.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="#leadership" class="text-gray-400 hover:text-white transition-colors">Leadership</a></li>
+                        <li><a href="#events" class="text-gray-400 hover:text-white transition-colors">Events</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt mt-1"></i>
+                            <span>123 University Ave, Rabat, Morocco</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-envelope mt-1"></i>
+                            <span>contact@liberiastudents-morocco.org</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-phone-alt mt-1"></i>
+                            <span>+212 600 123 456</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for updates and announcements.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-400">&copy; 2025 Liberia Students Association - Morocco. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal with enhanced 3D effect -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="" class="max-w-full max-h-full">
+            <div class="absolute top-4 right-4">
+                <button class="close-lightbox text-white text-3xl hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="absolute bottom-4 left-4 text-white">
+                <h3 class="text-xl font-semibold" id="lightbox-title"></h3>
+                <p class="text-sm" id="lightbox-date"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal with 3D effect -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md transform-style-preserve-3d">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Login</h2>
+                <button onclick="document.getElementById('loginModal').classList.add('hidden')" 
+                        class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                    <input type="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700">
+                </div>
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                    <input type="password" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700">
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" class="mr-2">
+                        <label for="remember" class="text-sm text-gray-700 dark:text-gray-300">Remember me</label>
+                    </div>
+                    <a href="#" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">
+                    Login
+                </button>
+            </form>
+            <div class="mt-4 text-center">
+                <p class="text-gray-600 dark:text-gray-300">Don't have an account? <a href="#register" class="text-blue-600 dark:text-blue-400 hover:underline">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Language translations
+        const translations = {
+            en: {
+                // Navigation
+                home: "Home",
+                about: "About",
+                leadership: "Leadership",
+                events: "Events",
+                contact: "Contact",
+                membership: "Membership",
+                login: "Login",
+                
+                // Hero Section
+                heroTitle: "Liberia Students Association",
+                heroSubtitle: "Morocco Chapter",
+                heroDescription: "Empowering Liberian students through academic support, cultural exchange, and community building",
+                learnMore: "Learn More",
+                joinUs: "Join Us",
+                
+                // About Section
+                aboutTitle: "About Us",
+                aboutText1: "The Liberia Students Association in Morocco is a non-profit organization established to promote unity, academic excellence, and cultural exchange among Liberian students studying in Morocco.",
+                aboutText2: "Our mission is to provide support, guidance, and a sense of community for Liberian students navigating academic life in Morocco.",
+                aboutText3: "We organize various activities including academic workshops, cultural events, and networking opportunities to enhance the student experience.",
+                
+                // Leadership Section
+                leadershipTitle: "Our Leadership Team",
+                executiveBoard: "Executive Board",
+                committees: "Committees",
+                
+                // Add more translations for all sections as needed
+            },
+            fr: {
+                // Navigation
+                home: "Accueil",
+                about: "À propos",
+                leadership: "Direction",
+                events: "Événements",
+                contact: "Contact",
+                membership: "Adhésion",
+                login: "Connexion",
+                
+                // Hero Section
+                heroTitle: "Association des Étudiants Libériens",
+                heroSubtitle: "Chapitre Maroc",
+                heroDescription: "Autonomiser les étudiants libériens grâce au soutien académique, aux échanges culturels et à la construction communautaire",
+                learnMore: "En savoir plus",
+                joinUs: "Rejoignez-nous",
+                
+                // About Section
+                aboutTitle: "À propos de nous",
+                aboutText1: "L'Association des Étudiants Libériens au Maroc est une organisation à but non lucratif créée pour promouvoir l'unité, l'excellence académique et les échanges culturels parmi les étudiants libériens étudiant au Maroc.",
+                aboutText2: "Notre mission est d'apporter un soutien, des conseils et un sentiment de communauté aux étudiants libériens naviguant dans la vie académique au Maroc.",
+                aboutText3: "Nous organisons diverses activités comprenant des ateliers académiques, des événements culturels et des opportunités de réseautage pour améliorer l'expérience étudiante.",
+                
+                // Leadership Section
+                leadershipTitle: "Notre Équipe de Direction",
+                executiveBoard: "Conseil Exécutif",
+                committees: "Comités",
+                
+                // Add more translations for all sections as needed
+            }
+        };
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('siteSearch');
+            const clearSearch = document.querySelector('.clear-search');
+            const searchContainer = document.querySelector('.search-container');
+            
+            if (searchInput) {
+                // Focus effects
+                searchInput.addEventListener('focus', () => {
+                    searchContainer.classList.add('focused');
+                });
+                
+                searchInput.addEventListener('blur', () => {
+                    if (!searchInput.value) {
+                        searchContainer.classList.remove('focused');
+                    }
+                });
+                
+                // Clear search button
+                clearSearch.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchInput.focus();
+                    clearSearch.style.opacity = '0';
+                });
+                
+                // Search functionality
+                searchInput.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') {
+                        const searchTerm = searchInput.value.toLowerCase();
+                        if (searchTerm.trim() === '') return;
+                        
+                        // Find all elements with text content that matches the search term
+                        const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, a, li');
+                        let found = false;
+                        
+                        elements.forEach(el => {
+                            if (el.textContent.toLowerCase().includes(searchTerm)) {
+                                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                el.classList.add('bg-yellow-200', 'animate-pulse');
+                                setTimeout(() => {
+                                    el.classList.remove('bg-yellow-200', 'animate-pulse');
+                                }, 3000);
+                                found = true;
+                                return;
+                            }
+                        });
+                        
+                        if (!found) {
+                            alert('No matching content found');
+                        }
+                    }
+                });
+            }
+        });
+
+        // Enhanced Language toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', () => {
+                    const currentLang = document.documentElement.lang || 'en';
+                    const newLang = currentLang === 'en' ? 'fr' : 'en';
+                    document.documentElement.lang = newLang;
+                    
+                    // Update button text
+                    languageToggle.innerHTML = `<i class="fas fa-language"></i> ${newLang.toUpperCase()}`;
+                    languageToggle.title = `Switch to ${currentLang === 'en' ? 'English' : 'French'}`;
+                    
+                    // Update all translatable elements
+                    Object.entries(translations[newLang]).forEach(([key, value]) => {
+                        const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+                        elements.forEach(el => {
+                            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                                el.placeholder = value;
+                            } else {
+                                el.textContent = value;
+                            }
+                        });
+                    });
+                });
+            }
+        });
+
+        // Gallery lightbox functionality with 3D effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDate = document.getElementById('lightbox-date');
+            const closeBtn = document.querySelector('.close-lightbox');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            // Open lightbox when gallery item is clicked
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    const title = this.querySelector('h3').textContent;
+                    const date = this.querySelector('p').textContent;
+
+                    lightboxImg.src = imgSrc;
+                    lightboxImg.alt = title;
+                    lightboxTitle.textContent = title;
+                    lightboxDate.textContent = date;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Close lightbox
+            closeBtn.addEventListener('click', function() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            // Close when clicking outside image
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Close with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // FAQ accordion functionality with 3D effects
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                answer.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Budget range display
+        const budgetSlider = document.querySelector('input[type="range"]');
+        if (budgetSlider) {
+            const budgetValue = document.getElementById('budgetValue');
+            budgetSlider.addEventListener('input', function() {
+                budgetValue.textContent = this.value;
+            });
+        }
+
+        // Form submission handling
+        const applicationForm = document.getElementById('applicationForm');
+        if (applicationForm) {
+            applicationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Form validation and submission logic
+                alert('Application submitted successfully!');
+                this.reset();
+            });
+        }
+
+        // Dark mode toggle with 3D effect
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark');
+            darkModeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Function to toggle the visibility of the modal
+        function toggleHelpModal() {
+            const modal = document.getElementById('helpModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function showModal(event) {
+            let content = '';
+            
+            if (event === 'event1') {
+                content = `
+                    <h3 class="text-xl font-semibold">Cultural Exchange Day</h3>
+                    <p><strong>Date:</strong> June 15, 2023</p>
+                    <p><strong>Location:</strong> Rabat, Morocco</p>
+                    <p>Join us for a day of cultural performances, food, and networking with students from across Africa. You will have the opportunity to meet like-minded individuals, learn about different cultures, and engage in activities that celebrate the rich diversity of the African continent.</p>
+                `;
+            } else if (event === 'event2') {
+                content = `
+                    <h3 class="text-xl font-semibold">Academic Workshop</h3>
+                    <p><strong>Date:</strong> July 5, 2023</p>
+                    <p><strong>Location:</strong> Online</p>
+                    <p>Learn effective study techniques and time management strategies from senior students who have mastered the art of balancing academics and life. This workshop will provide you with tools and resources to enhance your academic performance and reduce stress.</p>
+                `;
+            } else if (event === 'event3') {
+                content = `
+                    <h3 class="text-xl font-semibold">New Students Orientation</h3>
+                    <p><strong>Date:</strong> September 1, 2023</p>
+                    <p><strong>Location:</strong> Casablanca, Morocco</p>
+                    <p>Welcome to all new Liberian students arriving in Morocco! This orientation event is designed to help you settle into your new environment, meet fellow students, and understand the resources available to you. Come and learn about student life in Morocco, how to navigate the campus, and tips for success in your studies.</p>
+                `;
+            }
+            
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+    
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        // Organizational chart with enhanced 3D effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for the organizational chart
+            const data = {
+                "name": "Executive Board", 
+                "image": "https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&q=80", 
+                "position": "Leadership Team",
+                "children": [
+                    {
+                        "name": "President", 
+                        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                        "position": "John Doe",
+                        "children": [
+                            { 
+                                "name": "Vice President", 
+                                "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                                "position": "Jane Smith" 
+                            },
+                            { 
+                                "name": "Secretary", 
+                                "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                                "position": "Sarah Williams" 
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Treasurer", 
+                        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                        "position": "Michael Johnson",
+                        "children": [
+                            { 
+                                "name": "Academic Chair", 
+                                "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                                "position": "David Kamara" 
+                            },
+                            { 
+                                "name": "Cultural Chair", 
+                                "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                                "position": "Aminata Bangura" 
+                            },
+                            { 
+                                "name": "Welfare Chair", 
+                                "image": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80", 
+                                "position": "Mohammed Keita" 
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            // Set up the SVG container
+            const svg = d3.select("#orgChart"),
+                  width = svg.node().getBoundingClientRect().width,
+                  height = +svg.attr("height"),
+                  g = svg.append("g").attr("transform", "translate(80,80)");
+
+            // Create the tree layout with more space
+            const treeLayout = d3.tree().size([width - 160, height - 160]);
+            const root = d3.hierarchy(data);
+            treeLayout(root);
+
+            // Draw the links (lines between nodes)
+            const link = g.selectAll(".link")
+                .data(root.links())
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkVertical()
+                    .x(d => d.x)
+                    .y(d => d.y))
+                .style("fill", "none")
+                .style("stroke", "#3b82f6")
+                .style("stroke-width", "2px")
+                .style("stroke-opacity", "0.6")
+                .style("transition", "all 0.3s ease");
+
+            // Create node groups
+            const node = g.selectAll(".node")
+                .data(root.descendants())
+                .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.x},${d.y})`)
+                .style("cursor", "pointer")
+                .on("mouseover", function() {
+                    d3.select(this).select("image").transition()
+                        .duration(200)
+                        .attr("width", 70)  // Increased from 60
+                        .attr("height", 70) // Increased from 60
+                        .attr("x", -35)    // Adjusted for larger size
+                        .attr("y", -35);    // Adjusted for larger size
+                    
+                    d3.select(this).select("rect").transition()
+                        .duration(200)
+                        .attr("width", 160) // Increased from 140
+                        .attr("x", -80)     // Adjusted for larger size
+                        .attr("fill", "#3b82f6")
+                        .attr("fill-opacity", "0.1");
+                        
+                    d3.select(this).selectAll("text").transition()
+                        .duration(200)
+                        .style("font-weight", "600");
+                })
+                .on("mouseout", function() {
+                    d3.select(this).select("image").transition()
+                        .duration(200)
+                        .attr("width", 60)  // Increased from 50
+                        .attr("height", 60) // Increased from 50
+                        .attr("x", -30)    // Adjusted for larger size
+                        .attr("y", -30);    // Adjusted for larger size
+                    
+                    d3.select(this).select("rect").transition()
+                        .duration(200)
+                        .attr("width", 140) // Increased from 120
+                        .attr("x", -70)    // Adjusted for larger size
+                        .attr("fill", "#f3f4f6")
+                        .attr("fill-opacity", "0.5");
+                        
+                    d3.select(this).selectAll("text").transition()
+                        .duration(200)
+                        .style("font-weight", "normal");
+                });
+
+            // Add background rectangles for text
+            node.append("rect")
+                .attr("x", -70)    // Adjusted for larger size
+                .attr("y", 40)     // Adjusted position
+                .attr("width", 140) // Increased from 120
+                .attr("height", 60) // Increased from 50
+                .attr("rx", 5)
+                .attr("ry", 5)
+                .attr("fill", "#f3f4f6")
+                .attr("fill-opacity", "0.5")
+                .style("transition", "all 0.3s ease");
+
+            // Add images for each node with larger circles
+            node.append("image")
+                .attr("xlink:href", d => d.data.image)
+                .attr("x", -30)    // Adjusted for larger size
+                .attr("y", -30)    // Adjusted for larger size
+                .attr("width", 60) // Increased from 50
+                .attr("height", 60) // Increased from 50
+                .attr("clip-path", "circle(30px)") // Increased from 25px
+                .style("transition", "all 0.3s ease");
+
+            // Add name text
+            node.append("text")
+                .attr("dy", "2.4em") // Adjusted position
+                .attr("text-anchor", "middle")
+                .style("font-size", "14px") // Slightly larger
+                .style("fill", d => document.documentElement.classList.contains('dark') ? "#e5e7eb" : "#1f2937")
+                .text(d => d.data.name);
+
+            // Add position text
+            node.append("text")
+                .attr("dy", "3.8em") // Adjusted position
+                .attr("text-anchor", "middle")
+                .style("font-size", "12px") // Slightly larger
+                .style("fill", d => document.documentElement.classList.contains('dark') ? "#9ca3af" : "#6b7280")
+                .text(d => d.data.position);
+        });
+    </script>
+</body>
+</html>
